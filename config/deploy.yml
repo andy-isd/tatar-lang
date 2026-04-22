@@ -3,7 +3,7 @@ service: tatarlang
 
 # Name of the container image (use your-user/app-name on external registries).
 
-image: ghcr.io/andy-isd/tatarlang
+image: andy-isd/tatarlang
 
 # Deploy to these servers.
 servers:
