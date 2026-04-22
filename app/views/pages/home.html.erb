@@ -1,0 +1,70 @@
+<%# app/views/pages/home.html.erb %>
+<div class="relative min-h-screen flex flex-col items-center">
+
+<%# Hero %>
+<div class="relative w-full flex justify-center items-center py-16">
+  <%= image_tag "hero_mobile.png", class: "max-w-3xl w-full sm:hidden" %>
+  <%= image_tag "hero_desktop.png", class: "max-w-3xl w-full hidden sm:block" %>
+</div>
+
+<%# Intro text %>
+<p class="text-center max-w-2xl px-6 text-lg leading-relaxed text-gray-300 mb-3">
+  La prima vedere, pare un copil obișnuit, dar nu este. Ismail este un AI care reprezintă
+  limba tătară, o limbă care se stinge încet. Ca el să nu dispară, avem nevoie de tine.
+  De vocea ta. </p>
+  <p class="text-center max-w-2xl px-6 text-lg leading-relaxed text-gray-300 mb-16">
+  Fiecare poveste, amintire, fiecare cuvânt rostit de tine în tătară îl ajută
+  să trăiască mai departe și să țină vie cultura tătară.
+</p>
+
+<%# Two cards %>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 px-6 max-w-4xl w-full pb-24">
+
+  <%# Citește card %>
+  <div class="border border-white/20 rounded-2xl p-8 relative overflow-hidden">
+    <%=image_tag "stanga.png", class: "absolute bottom-0 left-0 w-full h-auto z-0" %>
+    <div class="relative z-10 flex flex-col justify-between gap-8 h-full">
+      <div class="flex flex-col items-center text-center gap-4">
+        <%= image_tag "read_box_title.png", class: "h-16 w-auto mb-4" %>
+        <p class="tekans">кем монда SNAKL</p>
+        <p class="text-base text-gray-400 leading-relaxed">
+          Ai o poveste dragă din copilărie? Spune-i-o lui Ismail. Fiecare poveste îi deschide
+          o lume nouă și îl ajută să crească frumos. Poți înregistra fragmente de până la 10 minute.
+        </p>        
+      </div>
+      <div class="flex flex-col items-center text-center gap-2">
+        <%= link_to citeste_path,
+              class: "mt-4 border border-white rounded-full px-8 py-3 text-sm hover:bg-white hover:text-black transition-all" do %>
+          <i class="lni lni-microphone-1 me-2"></i> Record
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <%# Spune card %>
+  <div class="border border-white/20 rounded-2xl p-8 relative overflow-hidden">
+    <%=image_tag "dreapta.png", class: "absolute -bottom-8 -right-4 w-1/2 h-auto z-0" %>
+    <div class="relative z-10 flex flex-col justify-between gap-8 h-full">
+      <div class="flex flex-col items-center text-center gap-4">
+        <%= image_tag "tell_box_title.png", class: "h-16 w-auto mb-4" %>
+        <p class="text-base text-gray-400 leading-relaxed">
+          Poate ai o poveste amuzantă pe care orice copil și-ar dori să o audă. O amintire
+          de când erai tu copil, o poznă, un moment care ți-a rămas în suflet.
+          Apasă butonul de mai jos și înregistrează povestea.
+        </p>
+      </div>
+      <div class="flex flex-col items-center text-center gap-2">
+        <%= link_to spune_path,
+              class: "mt-4 border border-white rounded-full px-8 py-3 text-sm hover:bg-white hover:text-black transition-all" do %>
+          <i class="lni lni-microphone-1 me-2"></i> Record
+        <% end %>
+        <%= link_to spune_path,
+              class: "mt-2 border border-white rounded-full px-8 py-3 text-sm hover:bg-white hover:text-black transition-all" do %>
+          <i class="lni lni-upload-1 me-2"></i> Upload
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>

@@ -1,0 +1,51 @@
+<%# app/views/admin/submissions/index.html.erb %>
+<div class="min-h-screen text-white p-8">
+  <div class="max-w-5xl mx-auto">
+    <h1 class="text-2xl font-bold mb-6">Submissions</h1>
+
+    <%# Status tabs %>
+    <div class="flex gap-4 mb-8">
+      <% Submission::STATUSES.each do |s| %>
+        <%= link_to s.capitalize, admin_submissions_path(status: s),
+              class: "px-4 py-2 rounded-full text-sm border #{@status == s ? 'bg-white text-black' : 'border-white/30 text-gray-400 hover:border-white'}" %>
+      <% end %>
+    </div>
+
+    <%# Table %>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="text-gray-500 border-b border-white/10">
+            <th class="text-left py-3 pr-4">ID</th>
+            <th class="text-left py-3 pr-4">Type</th>
+            <th class="text-left py-3 pr-4">Input</th>
+            <th class="text-left py-3 pr-4">Duration</th>
+            <th class="text-left py-3 pr-4">IP</th>
+            <th class="text-left py-3 pr-4">Submitted</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @submissions.each do |s| %>
+            <tr class="border-b border-white/5 hover:bg-white/5">
+              <td class="py-3 pr-4">#<%= s.id %></td>
+              <td class="py-3 pr-4"><%= s.story_type %></td>
+              <td class="py-3 pr-4"><%= s.input_type %></td>
+              <td class="py-3 pr-4"><%= s.duration ? "#{s.duration}s" : "—" %></td>
+              <td class="py-3 pr-4 text-gray-500"><%= s.ip_address %></td>
+              <td class="py-3 pr-4 text-gray-500"><%= s.created_at.strftime("%d %b %H:%M") %></td>
+              <td class="py-3">
+                <%= link_to "Review →", admin_submission_path(s),
+                      class: "text-green-400 hover:text-green-300" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <% if @submissions.empty? %>
+        <p class="text-gray-600 text-center py-16">No <%= @status %> submissions.</p>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  story_type: citeste
+  input_type: recorded
+  status: pending
+  ip_address: MyString
+  duration: 1
+
+two:
+  story_type: spune
+  input_type: uploaded
+  status: approved
+  ip_address: MyString
+  duration: 1

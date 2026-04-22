@@ -1,0 +1,50 @@
+
+<div class="min-h-screen text-white p-8">
+  <div class="max-w-2xl mx-auto">
+    <%= link_to "← Back", admin_submissions_path, class: "text-gray-500 hover:text-white text-sm" %>
+
+    <h1 class="text-2xl font-bold mt-6 mb-8">Submission #<%= @submission.id %></h1>
+
+    <div class="border border-white/10 rounded-2xl p-6 flex flex-col gap-4 mb-8">
+      <div class="grid grid-cols-2 gap-4 text-sm">
+        <div><span class="text-gray-500">Type:</span> <%= @submission.story_type %></div>
+        <div><span class="text-gray-500">Input:</span> <%= @submission.input_type %></div>
+        <div><span class="text-gray-500">Duration:</span> <%= @submission.duration ? "#{@submission.duration}s" : "—" %></div>
+        <div><span class="text-gray-500">Status:</span> <%= @submission.status %></div>
+        <div><span class="text-gray-500">IP:</span> <%= @submission.ip_address %></div>
+        <div><span class="text-gray-500">Submitted:</span> <%= @submission.created_at.strftime("%d %b %Y %H:%M") %></div>
+      </div>
+
+      <% if @submission.audio.attached? %>
+        <audio controls class="w-full mt-4">
+          <source src="<%= url_for(@submission.audio) %>" type="<%= @submission.audio.content_type %>">
+        </audio>
+      <% end %>
+    </div>
+
+    <%# Actions %>
+    <% if @submission.pending? %>
+      <div class="flex gap-4">
+        <%= button_to "✓ Approve", admin_submission_path(@submission),
+              params: { action_type: "approve" },
+              method: :patch,
+              class: "flex-1 bg-green-800 hover:bg-green-700 rounded-full py-2 px-4 text-sm transition-all" %>
+
+        <%= button_to "✗ Reject", admin_submission_path(@submission),
+              params: { action_type: "reject" },
+              method: :patch,
+              class: "flex-1 bg-red-900 hover:bg-red-800 rounded-full py-2 px-4 text-sm transition-all" %>
+      </div>
+    <% end %>
+
+    <%= button_to "Download", download_admin_submission_path(@submission),
+          method: :get,
+          form: { data: { turbo: false } },
+          class: "mt-4 w-full border border-white hover:bg-white hover:text-black rounded-full py-2 px-4 text-sm transition-all" %>
+
+    <%= button_to "Delete", admin_submission_path(@submission),
+          method: :delete,
+          data: { confirm: "Sure?" },
+          class: "mt-4 w-full border border-red-900/50 text-red-500 hover:bg-red-900/20 rounded-full py-3 text-sm transition-all" %>
+  </div>
+</div>

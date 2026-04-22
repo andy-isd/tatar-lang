@@ -1,0 +1,144 @@
+<div class="min-h-screen flex flex-col items-center justify-center px-6 py-16">
+
+<%= link_to  root_path, class: "absolute top-8 left-8 text-2xl text-white hover:opacity-60"  do %>
+  <i class="lni lni-arrow-left"></i>
+<% end %>
+
+<h1 class="text-4xl font-bold uppercase tracking-widest text-center mb-8">
+  <%- if @story_type == "citeste" %>
+    <%=image_tag "read_page_title.png", class: "h-16 w-auto" %>
+  <%else%>
+    <%=image_tag "tell_page_title.png", class: "h-16 w-auto" %>
+  <%end%>
+</h1>
+
+<p class="text-center max-w-xl text-sm text-gray-400 mb-12">
+  <%= @story_type == "citeste" ?
+    "Poate ai o poveste amuzantă pe care orice copil și-ar dori să o audă. O amintire de când erai tu copil, o poznă, un moment care ți-a rămas în suflet." :
+    "Ai o poveste dragă din copilărie? Spune-i-o lui Ismail. Fiecare poveste îi deschide o lume nouă și îl ajută să crească frumos." %>
+</p>
+
+<%= form_with model: @submission,
+      class: "flex flex-col items-center gap-6 w-full #{@story_type == 'citeste' ? 'max-w-4xl' : 'max-w-md'}",
+      data: { controller: "submission-recorder" } do |f| %>
+  <%= f.hidden_field :story_type, value: @story_type %>
+  <%= f.hidden_field :input_type,
+        value: "recorded",
+        data: { submission_recorder_target: "inputType" } %>
+  <%= f.hidden_field :duration, data: { submission_recorder_target: "duration" } %>
+
+  <%# Honeypot %>
+  <div class="hidden">
+    <%= label_tag :website %>
+    <%= text_field_tag :website %>
+  </div>
+
+  
+
+  <% if @story_type == "citeste" %>
+    <div class="w-full">
+      <div class="h-[50vh] w-full overflow-y-auto rounded-2xl border border-white/50 bg-transparent p-6 text-sm leading-relaxed text-gray-200">
+        <p class="text-gray-500">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
+          <br><br>
+          Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
+          <br><br>
+          Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
+        </p>
+      </div>      
+    </div>
+  <%else%>
+    <%# Ornament / visualizer %>
+    <div class="relative flex items-center justify-center my-6">
+      <%= image_tag "ornament.png", class: "w-40 h-40 opacity-60" %>      
+    </div>
+  <% end %>
+
+  <%# Audio file input (upload mode) %>
+  <div id="upload-section" class="<%= @story_type == 'citeste' ? 'hidden' : '' %> w-full">
+    <%= f.file_field :audio,
+          accept: "audio/*,audio/webm,.webm",
+          data: {
+            submission_recorder_target: "audioUpload",
+            action: "change->submission-recorder#uploadChanged"
+          },
+          class: "hidden" %>
+  </div>
+
+  <%# Direct-upload signed id only; disabled when empty so it does not shadow file_field :audio %>
+  <input type="hidden"
+         name="submission[audio]"
+         value=""
+         disabled
+         data-submission-recorder-target="recordedAudioSignedId">
+
+  <audio controls
+         data-submission-recorder-target="audioPreview"
+         class="hidden w-full">
+  </audio>
+  
+  
+
+  <%# Controls %>
+  <div class="flex flex-col items-center gap-3 w-full">
+    <div class="flex items-center gap-3 w-full"
+         data-submission-recorder-target="recordControls">
+      <button type="button"
+              data-action="click->submission-recorder#toggleRecording"
+              class="flex-1 flex items-center justify-center gap-3 border border-white rounded-full px-8 py-3 text-sm hover:bg-white hover:text-black transition-all">
+              <div
+                  data-submission-recorder-target="indicator"
+                  class="hidden self-start flex items-end flex-0 justify-center gap-1" style="height: 20px">
+                  
+                  <span class="eq-bar"></span>
+                  <span class="eq-bar"></span>
+                  <span class="eq-bar"></span>
+                  <span class="eq-bar"></span>
+                  <!-- <span class="eq-bar"></span>
+                  <span class="eq-bar"></span>
+                  <span class="eq-bar"></span> -->
+              </div>
+        <span data-submission-recorder-target="recordIcon"><i class="lni lni-microphone-1"></i></span>
+        <span data-submission-recorder-target="recordLabel">Înregistrează</span>
+      </button>
+
+      <button type="button"
+              data-action="click->submission-recorder#togglePause"
+              data-submission-recorder-target="pauseButton"
+              class="hidden flex items-center justify-center gap-2 border border-white rounded-full px-5 py-3 text-sm hover:bg-white hover:text-black transition-all">
+        <span data-submission-recorder-target="pauseIcon"><i class="lni lni-pause"></i></span>
+        <span data-submission-recorder-target="pauseLabel">Pauză</span>
+      </button>
+    </div>
+
+    <% if @story_type == "spune" %>
+      <button type="button"
+              data-action="click->submission-recorder#triggerUpload"
+              data-submission-recorder-target="uploadButton"
+              class="flex flex-1 items-center justify-center gap-3 border border-white rounded-full px-8 py-3 text-sm hover:bg-white hover:text-black transition-all w-full">
+              <i class="lni lni-upload-1"></i> Încarcă fișier
+      </button>
+      <button type="button"
+              data-action="click->submission-recorder#switchToRecording"
+              data-submission-recorder-target="switchToRecordButton"
+              class="hidden text-sm text-gray-400 hover:text-white underline underline-offset-2">
+        Înregistrează în schimb
+      </button>
+    <% end %>
+
+    <%= f.submit "Trimite",
+          data: { submission_recorder_target: "submitButton" },
+          class: "hidden w-full border border-white rounded-full px-8 py-3 text-sm cursor-pointer hover:bg-white hover:text-black transition-all" %>
+  </div>
+
+  <%# Error messages %>
+  <% if @submission.errors.any? %>
+    <div class="text-red-400 text-sm text-center">
+      <% @submission.errors.full_messages.each do |msg| %>
+        <p><%= msg %></p>
+      <% end %>
+    </div>
+  <% end %>
+
+<% end %>
+</div>
