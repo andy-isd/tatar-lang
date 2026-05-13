@@ -2,7 +2,8 @@
 <div class="relative min-h-screen flex flex-col items-center justify-center px-4 py-12">
   <%= video_tag "teaser.mp4",
         controls: true,
-        playsinline: true,        
+        playsinline: true,
+        poster: asset_path("poster.png"),
         preload: "metadata",
         class: "w-full max-w-4xl rounded-lg border border-white/20 shadow-lg bg-black" %>
 </div>
