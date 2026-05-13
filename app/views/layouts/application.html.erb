@@ -1,11 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Talktoismail" %></title>
+    <title><%= content_for(:title) || "Talk to Ismail" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Talktoismail">
+    <meta name="application-name" content="Talk to Ismail">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="og:title" content="Talk to Ismail">
+    <meta name="og:description" content="Fiecare poveste îi deschide o lume nouă și îl ajută să crească frumos.">
+    <meta name="og:image" content="<%= asset_path('poster.png') %>">
+    <meta name="og:url" content="<%= request.original_url %>">
+    <meta name="og:site_name" content="Talk to Ismail">
+    <meta name="og:type" content="website">
+    <meta name="og:locale" content="ro_RO">
+    <meta name="og:locale:alternate" content="en_US">
+    <meta name="og:locale:alternate" content="ro_RO">
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -14,9 +24,10 @@
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
 
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
 
     <link rel="stylesheet" href="https://use.typekit.net/qdd0owl.css">
     <link href="https://cdn.lineicons.com/5.1/line/lineicons.css" rel="stylesheet"/>
