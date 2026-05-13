@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get "pages/home"
-  root "pages#home"
+  get "pages/teaser"
+  root "pages#teaser"
 
   get "citeste", to: "submissions#new", as: :citeste
   get "spune", to: "submissions#new", as: :spune

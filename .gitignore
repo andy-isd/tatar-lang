@@ -38,3 +38,6 @@
 !/app/assets/builds/.keep
 .DS_Store
 .kamal/secrets
+
+
+.idea/*
